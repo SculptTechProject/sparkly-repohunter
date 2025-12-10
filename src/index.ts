@@ -19,6 +19,8 @@ async function scrapeRepo(url: string) {
 
         const tags = await page.locator('.topic-tag').allInnerTexts();
 
+        const readme = await page.locator('.markdown-body').first().innerText().catch(() => "");
+
         await page.waitForLoadState('networkidle');
 
         await page.screenshot({
@@ -30,6 +32,7 @@ async function scrapeRepo(url: string) {
         console.log({
             description: description.trim(),
             tags: tags,
+            readme: readme.trim(),
             screenshot: "Saved as repo-preview.png"
         });
 
@@ -40,4 +43,4 @@ async function scrapeRepo(url: string) {
     }
 }
 
-scrapeRepo('https://github.com/microsoft/playwright');
+scrapeRepo('https://github.com/SculptTechProject/sparkly-server');
